@@ -1,0 +1,20 @@
+.toolbar {
+    padding: 0 64px;
+}
+.toolbar button {
+    margin: 0 32px;
+}
+button {
+    border: none;
+    background: transparent;
+    cursor: pointer;
+}
+.icon {
+    width: 24px;
+    border-radius: 8px;
+    padding: 4px;
+    transition: .3s;
+}
+button:hover .icon{
+    background: rgba(126, 125, 125, 0.35);
+}

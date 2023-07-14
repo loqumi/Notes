@@ -1,0 +1,31 @@
+body, html, #root {
+    height: 100%;
+}
+
+body {
+    margin: 0;
+    padding: 0;
+    overflow-x: hidden;
+    font-family: Roboto, sans-serif;
+}
+
+.ql-toolbar, .ql-container {
+    border: none !important;
+}
+
+.ql-picker-options {
+    background: #1d1e1e !important;
+}
+
+.ql-toolbar .ql-stroke {
+    fill: none;
+    stroke: white;
+}
+
+.ql-toolbar .ql-fill {
+    fill: white;
+}
+
+.ql-toolbar .ql-picker {
+    color: white;
+}
