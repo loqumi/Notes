@@ -1,6 +1,8 @@
 .toolbar {
-    padding: 8px 64px;
-    border-bottom: 3px solid black;
+    display: flex;
+    justify-content: space-between;
+    padding: 8px 0;
+    border-bottom: 3px solid rgb(0, 0, 0);
 }
 .toolbar button {
     margin: 0 32px;
@@ -16,6 +18,47 @@ button {
     padding: 4px;
     transition: .3s;
 }
+.group {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 0 64px;
+}
+.search {
+    background: #242424;
+    border: none;
+    outline:none;
+    border-bottom: 1px solid white;
+}
 button:hover .icon{
     background: rgba(126, 125, 125, 0.35);
+}
+.icon.disable {
+    opacity: .7;
+}
+button:hover .icon.disable {
+    background: none;
+    cursor: not-allowed;
+}
+@media (max-width: 600px) {
+    .group {
+        padding: 0 10px;
+    }
+}
+@media (max-width: 480px) {
+    .group {
+        padding: 0 8px;
+    }
+    .toolbar button {
+        margin: 0 8px;
+    }
+}
+
+@media (max-width: 320px) {
+    .group {
+        padding: 0 8px;
+    }
+    .toolbar button {
+        margin: 0 2px;
+    }
 }

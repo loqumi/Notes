@@ -4,6 +4,8 @@
     padding: 16px;
     transition: .3s;
     cursor: pointer;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 .list_item:hover {
     background: rgba(122, 121, 121, 0.56);

@@ -1,11 +1,11 @@
-import { TrashIcon } from "../icons";
-import { addIcon } from "../icons";
-import React, { useContext } from "react";
+import {searchIcon, TrashIcon, addIcon} from "../icons";
+import React, {useContext, useState} from "react";
 import { NotesContext } from "./NotesContext";
 import styles from "../styles/Navbar.module.css"
 
 function Navbar() {
-    const { selectedNote, deleteNote, addNote, selectNote } = useContext(NotesContext);
+    const { selectedNote, deleteNote, addNote, selectNote, searchNotes } = useContext(NotesContext);
+    const [searchQuery, setSearchQuery] = useState("");
 
     const handleDelete = () => {
         if (selectedNote) {
@@ -24,15 +24,32 @@ function Navbar() {
         addNote(note);
         selectNote(note);
     };
+    const handleSearchChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+        const query = event.target.value;
+        setSearchQuery(query);
+        searchNotes(query);
+    };
 
     return (
         <header className={styles.toolbar}>
-            <button onClick={handleDelete} disabled={!selectedNote}>
-                <img src={TrashIcon} alt="delete" className={styles.icon} />
-            </button>
-            <button onClick={handleAddNote}>
-                <img src={addIcon} alt="add" className={styles.icon} />
-            </button>
+            <div className={styles.group}>
+                <button onClick={handleDelete} disabled={!selectedNote}>
+                    <img src={TrashIcon} alt="delete" className={`${styles.icon} ${!selectedNote ? styles.disable : ""}`} />
+                </button>
+                <button onClick={handleAddNote}>
+                    <img src={addIcon} alt="add" className={styles.icon} />
+                </button>
+            </div>
+            <div className={styles.group}>
+                <img src={searchIcon} alt="add" className={styles.icon} />
+                <input
+                    className={styles.search}
+                    type="text"
+                    value={searchQuery}
+                    onChange={handleSearchChange}
+                    placeholder="Search notes"
+                />
+            </div>
         </header>
     )
 }

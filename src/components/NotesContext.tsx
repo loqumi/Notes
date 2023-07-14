@@ -13,6 +13,7 @@ interface NotesContextType {
     deleteNote: (noteId: string) => void;
     updateNote: (noteId: string, payload: Partial<Note>) => void;
     addNote: (note: Note) => void;
+    searchNotes: (query: string) => void;
 }
 
 export const NotesContext = createContext<NotesContextType>({
@@ -22,6 +23,7 @@ export const NotesContext = createContext<NotesContextType>({
     deleteNote: () => {},
     updateNote: () => {},
     addNote: () => {},
+    searchNotes: () => {},
 });
 
 interface NotesProviderProps {
@@ -126,6 +128,27 @@ export const NotesProvider: React.FC<NotesProviderProps> = ({ children }) => {
             };
         }
     };
+    const searchNotes = (query: string) => {
+        if (database) {
+            const transaction = database.transaction('notes', 'readonly');
+            const objectStore = transaction.objectStore('notes');
+            const getAllRequest = objectStore.getAll();
+
+            getAllRequest.onsuccess = () => {
+                const allNotes = getAllRequest.result;
+                const filteredNotes = allNotes.filter(
+                    (note) =>
+                        note.title.toLowerCase().includes(query.toLowerCase()) ||
+                        note.content.toLowerCase().includes(query.toLowerCase())
+                );
+                setNotes(filteredNotes);
+            };
+
+            getAllRequest.onerror = () => {
+                console.error('IndexedDB search error:', getAllRequest.error);
+            };
+        }
+    };
 
     return (
         <NotesContext.Provider
@@ -136,6 +159,7 @@ export const NotesProvider: React.FC<NotesProviderProps> = ({ children }) => {
                 deleteNote,
                 updateNote,
                 addNote,
+                searchNotes,
             }}
         >
             {children}
