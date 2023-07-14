@@ -2,5 +2,12 @@
     border-radius: 8px;
     margin: 8px;
     padding: 16px;
-    background-color: #9a7f26;
+    transition: .3s;
+    cursor: pointer;
+}
+.list_item:hover {
+    background: rgba(122, 121, 121, 0.56);
+}
+.list_item.active {
+    background-color: #d0aa2f;
 }

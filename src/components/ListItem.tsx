@@ -13,14 +13,15 @@ interface ListItemProps {
 }
 
 function ListItem({ note }: ListItemProps) {
-    const { selectNote } = useContext(NotesContext);
+    const { selectNote, selectedNote } = useContext(NotesContext);
+    const isActive = selectedNote?.id === note.id
 
     const handleClick = () => {
         selectNote(note);
     };
 
     return (
-        <div className={styles.list_item} onClick={handleClick}>
+        <div className={`${styles.list_item} ${isActive ? styles.active : ""}`} onClick={handleClick}>
             {note.title}
         </div>
     );
