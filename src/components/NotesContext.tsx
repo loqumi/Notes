@@ -11,7 +11,8 @@ interface NotesContextType {
     selectedNote: Note | null;
     selectNote: (note: Note) => void;
     deleteNote: (noteId: string) => void;
-    updateNote: (noteId: string, newContent: string) => void;
+    updateNote: (noteId: string, payload: Partial<Note>) => void;
+    addNote: (note: Note) => void;
 }
 
 export const NotesContext = createContext<NotesContextType>({
@@ -20,6 +21,7 @@ export const NotesContext = createContext<NotesContextType>({
     selectNote: () => {},
     deleteNote: () => {},
     updateNote: () => {},
+    addNote: () => {},
 });
 
 interface NotesProviderProps {
@@ -27,11 +29,7 @@ interface NotesProviderProps {
 }
 
 export const NotesProvider: React.FC<NotesProviderProps> = ({ children }) => {
-    const [notes, setNotes] = useState<Note[]>([
-        { id: '1', title: 'Note 1', content: 'This is the content of note 1.' },
-        { id: '2', title: 'Note 2', content: 'This is the content of note 2.' },
-        { id: '3', title: 'Note 3', content: 'This is the content of note 3.' },
-    ]);
+    const [notes, setNotes] = useState<Note[]>([]);
     const [selectedNote, setSelectedNote] = useState<Note | null>(null);
 
     const selectNote = (note: Note) => {
@@ -43,12 +41,15 @@ export const NotesProvider: React.FC<NotesProviderProps> = ({ children }) => {
         setSelectedNote(null);
     };
 
-    const updateNote = (noteId: string, newContent: string) => {
+    const updateNote = (noteId: string, payload: Partial<Note>) => {
         setNotes((prevNotes) =>
             prevNotes.map((note) =>
-                note.id === noteId ? { ...note, content: newContent } : note
+                note.id === noteId ? { ...note, ...payload } : note
             )
         );
+    };
+    const addNote = (note: Note) => {
+        setNotes((prevNotes) => [...prevNotes, note]);
     };
 
     return (
@@ -59,6 +60,7 @@ export const NotesProvider: React.FC<NotesProviderProps> = ({ children }) => {
                 selectNote,
                 deleteNote,
                 updateNote,
+                addNote,
             }}
         >
             {children}

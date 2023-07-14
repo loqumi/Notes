@@ -6,11 +6,11 @@ function Sidebar() {
     const { notes, selectNote } = useContext(NotesContext);
 
     return (
-        <div className="sidebar">
+        <section>
             {notes.map((note) => (
                 <ListItem key={note.id} note={note} onSelect={selectNote} />
             ))}
-        </div>
+        </section>
     );
 }
 

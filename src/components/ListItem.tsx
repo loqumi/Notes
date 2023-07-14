@@ -1,5 +1,6 @@
 import React, {useContext} from 'react';
 import { NotesContext } from './NotesContext';
+import styles from "../styles/ListItem.module.css"
 interface Note {
     id: string;
     title: string;
@@ -19,7 +20,7 @@ function ListItem({ note }: ListItemProps) {
     };
 
     return (
-        <div className="list-item" onClick={handleClick}>
+        <div className={styles.list_item} onClick={handleClick}>
             {note.title}
         </div>
     );
