@@ -1,5 +1,5 @@
 import {searchIcon, TrashIcon, addIcon} from "../icons";
-import React, {useContext, useState} from "react";
+import React, {useCallback, useContext, useEffect, useState} from "react";
 import { NotesContext } from "./NotesContext";
 import styles from "../styles/Navbar.module.css"
 
@@ -15,20 +15,35 @@ function Navbar() {
         }
     };
 
-    const handleAddNote = () => {
+    const handleAddNote = useCallback(() => {
         const note = {
             id: Date.now().toString(),
             title: 'new note',
             content: '',
-        }
+        };
         addNote(note);
         selectNote(note);
-    };
+    }, [addNote, selectNote]);
+
     const handleSearchChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         const query = event.target.value;
         setSearchQuery(query);
         searchNotes(query);
     };
+
+    useEffect(() => {
+        const handleKeyPress = (event: KeyboardEvent) => {
+            if (event.key === '+') {
+                handleAddNote();
+            }
+        };
+
+        document.addEventListener('keypress', handleKeyPress);
+
+        return () => {
+            document.removeEventListener('keypress', handleKeyPress);
+        };
+    }, [handleAddNote]);
 
     return (
         <header className={styles.toolbar}>

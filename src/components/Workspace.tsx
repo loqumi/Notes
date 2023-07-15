@@ -27,7 +27,7 @@ function Workspace() {
         if (selectedNote) {
             setValue(selectedNote.content)
         }
-        ref.current?.editor?.focus();
+        // ref.current?.editor?.focus();
     }, [selectedNote])
 
     return (
